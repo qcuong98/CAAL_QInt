@@ -4,8 +4,10 @@
 #include <cstdint>
 #include <cstring>
 
+#define N 4
+
 struct QInt {
-        uint32_t data[4];
+        uint32_t data[N];
         QInt() {
                 memset(data, 0, sizeof(data));
         }
