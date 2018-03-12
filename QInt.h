@@ -20,4 +20,8 @@ QInt operator ~ (const QInt &);
 QInt operator - (const QInt &a);
 QInt operator + (const QInt &a, const QInt &b);
 QInt operator - (const QInt &a, const QInt &b);
+
+QInt Dec2QInt(const char *dec);
+char *QInt2Dec(const QInt &q);
+
 #endif

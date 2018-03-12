@@ -57,5 +57,5 @@ QInt ShiftRotateLeft(const QInt &q, int bits) {
 }
 
 QInt ShiftRotateRight(const QInt &q, int bits) {
-        return RotateLeft(q, -bits);
+        return ShiftRotateLeft(q, -bits);
 }
