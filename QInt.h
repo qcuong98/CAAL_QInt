@@ -6,6 +6,8 @@
 
 #define N 4
 
+#define BIT (N << 5)
+
 struct QInt {
         uint32_t data[N];
         QInt();
