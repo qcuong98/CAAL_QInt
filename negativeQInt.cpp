@@ -1,6 +1,6 @@
 #include "QInt.h"
 
-QInt negativeQInt(const QInt &a) {
+QInt operator - (const QInt &a) {
         QInt b;
         for (int i = 0; i < N; ++i)
                 b.data[i] = ~a.data[i];

@@ -1,6 +1,5 @@
-#include "negativeQInt.cpp"
-#include "sumQInt.cpp"
+#include "QInt.h"
 
-QInt SubQInt(const QInt &a, const QInt &b) {
-        return sumQInt(a, negativeQInt(b));
+QInt operator - (const QInt &a, const QInt &b) {
+        return a + (-b);
 }

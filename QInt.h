@@ -8,13 +8,14 @@
 
 struct QInt {
         uint32_t data[N];
-        QInt() {
-                memset(data, 0, sizeof(data));
-        }
+        QInt();
 };
 
 QInt operator | (const QInt &, const QInt &);
 QInt operator & (const QInt &, const QInt &);
 QInt operator ^ (const QInt &, const QInt &);
 QInt operator ~ (const QInt &);
+QInt operator - (const QInt &a);
+QInt operator + (const QInt &a, const QInt &b);
+QInt operator - (const QInt &a, const QInt &b);
 #endif

@@ -1,6 +1,6 @@
 #include "QInt.h"
 
-QInt sumQInt(const QInt &a, const QInt &b) {
+QInt operator + (const QInt &a, const QInt &b) {
         QInt c;
         bool tmp = 0;
         for (int i = 0; i < N; ++i) {
