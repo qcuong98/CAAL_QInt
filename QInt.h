@@ -17,9 +17,15 @@ QInt operator | (const QInt &, const QInt &);
 QInt operator & (const QInt &, const QInt &);
 QInt operator ^ (const QInt &, const QInt &);
 QInt operator ~ (const QInt &);
-QInt operator - (const QInt &a);
-QInt operator + (const QInt &a, const QInt &b);
-QInt operator - (const QInt &a, const QInt &b);
+
+QInt operator << (const QInt &, unsigned int);
+QInt operator >> (const QInt &, unsigned int);
+QInt ShiftRotateLeft(const QInt &, int);
+QInt ShiftRotateRight(const QInt &, int);
+
+QInt operator - (const QInt &);
+QInt operator + (const QInt &, const QInt &);
+QInt operator - (const QInt &, const QInt &);
 
 QInt Dec2QInt(const char *dec);
 char *QInt2Dec(const QInt &q);
