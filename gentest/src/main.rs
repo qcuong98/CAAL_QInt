@@ -130,5 +130,5 @@ fn main() {
     gen_and_test(50, "../tests/01_and");
     gen_or_test(50, "../tests/02_or");
     gen_xor_test(50, "../tests/03_xor");
-    gen_not_test(50, "../tests/04not");
+    gen_not_test(50, "../tests/04_not");
 }
