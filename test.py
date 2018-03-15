@@ -1,5 +1,6 @@
 import subprocess
 import os
+import sys
 
 def run_test(path):
     print("running", path)
@@ -17,9 +18,14 @@ def run_test(path):
             print("expected:", expected_output[i])
 
 os.system("make")
-tests = os.listdir("tests");
-tests.sort()
-for dir in tests:
-    run_test("tests/" + dir)
+
+if len(sys.argv) > 1:
+    for dir in sys.argv[1:]:
+        run_test(dir)
+else:
+    tests = os.listdir("tests");
+    tests.sort()
+    for dir in tests:
+        run_test("tests/" + dir)
 
 os.remove("a.out")

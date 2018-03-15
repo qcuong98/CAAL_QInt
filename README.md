@@ -1,3 +1,14 @@
+# Sinh, chạy test
+
+Sinh lại test:
+- Cài rust: `curl https://sh.rustup.rs -sSf | sh`
+- Cài rust nightly: `rustup install nightly`
+- Sinh test: `make gen`
+
+Chạy test:
+- Chạy tất cả các test: `python3 test.py`
+- Chạy một số test: `python3 test.py tests/01_and tests/04_not`
+
 # Chạy bằng Makefile
 
 ```
