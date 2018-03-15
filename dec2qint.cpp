@@ -10,7 +10,7 @@ static void setbit(QInt &q, int i) {
 }
 
 int div2(char *x, int len) {
-    char *res = (char *)malloc(len + 1);
+    char *res = (char *)calloc(len + 1, 1);
     int q     = 0;
     for (int i = 0; i < len; i++) {
         q      = q * 10 + (x[i] - 48);
@@ -18,14 +18,14 @@ int div2(char *x, int len) {
         q      = q % 2;
     }
 
-    strcpy(x, res);
-    free(res);
     int start = 0;
     while (start < len && res[start] == '0')
         start++;
     for (int i = start; i <= len; i++)
         res[i - start] = res[i];
     res[len - start] = '\0';
+    strcpy(x, res);
+    free(res);
     return len - start;
 }
 

@@ -40,6 +40,13 @@ struct Input {
     }
 
     string output() {
+#define RETURN(EXP)        \
+    {                      \
+        char *_s  = (EXP); \
+        string _r = _s;    \
+        free(_s);          \
+        return _r;         \
+    }
 #define check(EXP)         \
     {                      \
         if (!(EXP))        \
@@ -52,33 +59,33 @@ struct Input {
         int i;
         switch (op) {
             case '\0':
-                return QInt2Dec(Dec2QInt(lhs.data()));
+                RETURN(QInt2Dec(Dec2QInt(lhs.data())));
             case '~':
-                return QInt2Dec(~Dec2QInt(lhs.data()));
+                RETURN(QInt2Dec(~Dec2QInt(lhs.data())));
             case '-':
                 if (rhs.empty())
-                    return QInt2Dec(-Dec2QInt(lhs.data()));
-                return op2(+);
+                    RETURN(QInt2Dec(-Dec2QInt(lhs.data())));
+                RETURN(op2(+));
             case '+':
-                return op2(+);
+                RETURN(op2(+));
             case '&':
-                return op2(&);
+                RETURN(op2(&));
             case '|':
-                return op2(|);
+                RETURN(op2(|));
             case '^':
-                return op2 (^);
+                RETURN(op2 (^));
             case '<':  // <<
                 stringstream(rhs) >> u;
-                return QInt2Dec(Dec2QInt(lhs.data()) << u);
+                RETURN(QInt2Dec(Dec2QInt(lhs.data()) << u));
             case '>':  // >>
                 stringstream(rhs) >> u;
-                return QInt2Dec(Dec2QInt(lhs.data()) >> u);
+                RETURN(QInt2Dec(Dec2QInt(lhs.data()) >> u));
             case 'l':  // Rotate left
                 stringstream(rhs) >> i;
-                return QInt2Dec(ShiftRotateLeft(Dec2QInt(lhs.data()), i));
+                RETURN(QInt2Dec(ShiftRotateLeft(Dec2QInt(lhs.data()), i)));
             case 'r':  // Rotate right
                 stringstream(rhs) >> i;
-                return QInt2Dec(ShiftRotateRight(Dec2QInt(lhs.data()), i));
+                RETURN(QInt2Dec(ShiftRotateRight(Dec2QInt(lhs.data()), i)));
             default:
                 check(false);
         }
@@ -93,12 +100,12 @@ int main(int argc, char **argv) {
     vector<Input> inputs;
     while (getline(in, line))
         inputs.push_back(Input(move(line)));
-    string output;
+    stringstream output;
     for (auto input : inputs)
-        output += input.output() + "\n";
+        output << input.output() << endl;
     if (argc >= 3) {
-        ofstream(argv[3]) << output;
+        ofstream(argv[3]) << output.str();
     } else {
-        cout << output;
+        cout << output.str();
     }
 }
