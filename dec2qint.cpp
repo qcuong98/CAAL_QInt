@@ -55,6 +55,7 @@ QInt Dec2QInt(const char *dec) {
             setbit(res, i);
         len = div2(inp, len);
     }
+    free(inp);
 
     if (start)
         return -res;
