@@ -187,6 +187,22 @@ fn gen_substract_test(count: usize, path: &str, max: i128) {
     write(input, output, path).unwrap();
 }
 
+fn neg_test() -> (String, String) {
+    let lhs = rand::random::<i128>();
+    (format!("10 {} -", lhs), lhs.overflowing_neg().0.to_string())
+}
+
+fn gen_neg_test(count: usize, path: &str) {
+    let mut input = Vec::new();
+    let mut output = Vec::new();
+    for _ in 0..count {
+        let (i, o) = neg_test();
+        input.push(i);
+        output.push(o);
+    }
+    write(input, output, path).unwrap();
+}
+
 fn main() {
     let count = 50;
     gen_conv_test(count, "../tests/00_conv_10_10");
@@ -198,4 +214,5 @@ fn main() {
     gen_shift_test(count, "../tests/06_shr", -1);
     gen_add_test(count, "../tests/07_add", 10000);
     gen_substract_test(count, "../tests/08_sub", 10000);
+    gen_neg_test(count, "../tests/09_neg");
 }
