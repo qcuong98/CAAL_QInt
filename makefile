@@ -1,5 +1,5 @@
 build:
-	g++ *.cpp -std=c++11 -O3 #-fsanitize=address -fno-omit-frame-pointer -fsanitize=undefined
+	g++ *.cpp -std=c++11 -O3 #-fsanitize=address,undefined -fno-omit-frame-pointer
 run:
 	@make --no-print-directory
 	(./a.out $(A); rm a.out)
