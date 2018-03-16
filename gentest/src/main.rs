@@ -203,6 +203,31 @@ fn gen_neg_test(count: usize, path: &str) {
     write(input, output, path).unwrap();
 }
 
+// > 0 => left
+// < 0 => right
+fn rotate_test(direction: i32) -> (String, String) {
+    assert!(direction != 0);
+    let lhs = rand::random::<i128>() % 1000;
+    let rhs = rand::random::<i32>().abs() as u32 % 3;
+    let (op, res) = if direction > 0 {
+        ("rol", lhs.rotate_left(rhs))
+    } else {
+        ("ror", lhs.rotate_right(rhs))
+    };
+    (format!("10 {} {} {}", lhs, op, rhs), res.to_string())
+}
+
+fn gen_rotate_test(count: usize, path: &str, direction: i32) {
+    let mut input = Vec::new();
+    let mut output = Vec::new();
+    for _ in 0..count {
+        let (i, o) = rotate_test(direction);
+        input.push(i);
+        output.push(o);
+    }
+    write(input, output, path).unwrap();
+}
+
 fn main() {
     let count = 50;
     gen_conv_test(count, "../tests/00_conv_10_10");
@@ -215,4 +240,6 @@ fn main() {
     gen_add_test(count, "../tests/07_add", 10000);
     gen_substract_test(count, "../tests/08_sub", 10000);
     gen_neg_test(count, "../tests/09_neg");
+    gen_rotate_test(count, "../tests/10_rol", 1);
+    gen_rotate_test(count, "../tests/11_ror", -1);
 }
