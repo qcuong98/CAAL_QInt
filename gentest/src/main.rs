@@ -1,6 +1,37 @@
 #![feature(i128_type)]
 #![feature(i128)]
 extern crate rand;
+use rand::distributions::range::SampleRange;
+use std::cmp::PartialOrd;
+
+trait LowHigh {
+    fn low() -> Self;
+    fn high() -> Self;
+}
+
+impl LowHigh for i128 {
+    fn low() -> Self { std::i128::MIN }
+    fn high() -> Self { std::i128::MAX }
+}
+impl LowHigh for i64 {
+    fn low() -> Self { std::i64::MIN }
+    fn high() -> Self { std::i64::MAX }
+}
+impl LowHigh for i32 {
+    fn low() -> Self { std::i32::MIN }
+    fn high() -> Self { std::i32::MAX }
+}
+impl LowHigh for u32 {
+    fn low() -> Self { std::u32::MIN }
+    fn high() -> Self { std::u32::MAX }
+}
+
+fn uniform<T: SampleRange + PartialOrd + LowHigh>() -> T {
+    use rand::distributions::{IndependentSample, Range};
+    let between = Range::new(T::low(), T::high());
+    let mut rng = rand::thread_rng();
+    between.ind_sample(&mut rng)
+}
 
 fn format(mut i: i128, base: u32) -> String {
     assert!(base > 1 && base <= 16);
@@ -41,7 +72,7 @@ fn write(input: Vec<String>, output: Vec<String>, path: &str) -> std::io::Result
 }
 
 fn conv_test(in_base: u32, out_base: u32) -> (String, String) {
-    let num = rand::random::<i128>();
+    let num = uniform::<i128>();
     (
         format!("{} {} {}", in_base, out_base, format(num, in_base)),
         format(num, out_base),
@@ -60,8 +91,8 @@ fn gen_conv_test(count: usize, path: &str, in_base: u32, out_base: u32) {
 }
 
 fn and_test() -> (String, String) {
-    let lhs = rand::random::<i128>();
-    let rhs = rand::random::<i128>();
+    let lhs = uniform::<i128>();
+    let rhs = uniform::<i128>();
     (format!("10 {} & {}", lhs, rhs), (lhs & rhs).to_string())
 }
 
@@ -77,8 +108,8 @@ fn gen_and_test(count: usize, path: &str) {
 }
 
 fn or_test() -> (String, String) {
-    let lhs = rand::random::<i128>();
-    let rhs = rand::random::<i128>();
+    let lhs = uniform::<i128>();
+    let rhs = uniform::<i128>();
     (format!("10 {} | {}", lhs, rhs), (lhs | rhs).to_string())
 }
 
@@ -94,8 +125,8 @@ fn gen_or_test(count: usize, path: &str) {
 }
 
 fn xor_test() -> (String, String) {
-    let lhs = rand::random::<i128>();
-    let rhs = rand::random::<i128>();
+    let lhs = uniform::<i128>();
+    let rhs = uniform::<i128>();
     (format!("10 {} ^ {}", lhs, rhs), (lhs ^ rhs).to_string())
 }
 
@@ -111,7 +142,7 @@ fn gen_xor_test(count: usize, path: &str) {
 }
 
 fn not_test() -> (String, String) {
-    let lhs = rand::random::<i128>();
+    let lhs = uniform::<i128>();
     (format!("10 {} ~", lhs), (!lhs).to_string())
 }
 
@@ -130,8 +161,8 @@ fn gen_not_test(count: usize, path: &str) {
 // < 0 => shift right
 fn shift_test(direction: i32) -> (String, String) {
     assert!(direction != 0);
-    let lhs = rand::random::<i128>();
-    let rhs = rand::random::<u32>() % 128;
+    let lhs = uniform::<i128>();
+    let rhs = uniform::<u32>() % 128;
     let (op, res) = if direction > 0 {
         ("<<", lhs << rhs)
     } else {
@@ -152,8 +183,8 @@ fn gen_shift_test(count: usize, path: &str, direction: i32) {
 }
 
 fn add_test() -> (String, String) {
-    let lhs = rand::random::<i128>();
-    let rhs = rand::random::<i128>();
+    let lhs = uniform::<i128>();
+    let rhs = uniform::<i128>();
     use std::i128;
     (format!("10 {} + {}", lhs, rhs), lhs.overflowing_add(rhs).0.to_string())
 }
@@ -170,8 +201,8 @@ fn gen_add_test(count: usize, path: &str) {
 }
 
 fn substract_test() -> (String, String) {
-    let lhs = rand::random::<i128>();
-    let rhs = rand::random::<i128>();
+    let lhs = uniform::<i128>();
+    let rhs = uniform::<i128>();
     use std::i128;
     (format!("10 {} - {}", lhs, rhs), lhs.overflowing_sub(rhs).0.to_string())
 }
@@ -188,7 +219,7 @@ fn gen_substract_test(count: usize, path: &str) {
 }
 
 fn neg_test() -> (String, String) {
-    let lhs = rand::random::<i128>();
+    let lhs = uniform::<i128>();
     (format!("10 {} -", lhs), lhs.overflowing_neg().0.to_string())
 }
 
@@ -207,8 +238,8 @@ fn gen_neg_test(count: usize, path: &str) {
 // < 0 => right
 fn rotate_test(direction: i32) -> (String, String) {
     assert!(direction != 0);
-    let lhs = rand::random::<i128>() % 1000;
-    let rhs = rand::random::<i32>().abs() as u32 % 3;
+    let lhs = uniform::<i128>();
+    let rhs = uniform::<i32>().abs() as u32;
     let (op, res) = if direction > 0 {
         ("rol", lhs.rotate_left(rhs))
     } else {
@@ -229,8 +260,8 @@ fn gen_rotate_test(count: usize, path: &str, direction: i32) {
 }
 
 fn mul_test() -> (String, String) {
-    let lhs = rand::random::<i64>() as i128;
-    let rhs = rand::random::<i32>() as i128;
+    let lhs = uniform::<i64>() as i128;
+    let rhs = uniform::<i32>() as i128;
     use std::i128;
     (format!("10 {} * {}", lhs, rhs), lhs.overflowing_mul(rhs).0.to_string())
 }
@@ -245,6 +276,30 @@ fn gen_mul_test(count: usize, path: &str) {
     }
     write(input, output, path).unwrap();
 }
+
+fn div_test() -> (String, String) {
+    let lhs = uniform::<i128>();
+    let rhs = uniform::<i128>();
+    let rhs = if rhs == 0 {
+        uniform::<i128>()
+    } else {
+        rhs
+    };
+    use std::i128;
+    (format!("10 {} / {}", lhs, rhs), (lhs / rhs).to_string())
+}
+
+fn gen_div_test(count: usize, path: &str) {
+    let mut input = Vec::new();
+    let mut output = Vec::new();
+    for _ in 0..count {
+        let (i, o) = div_test();
+        input.push(i);
+        output.push(o);
+    }
+    write(input, output, path).unwrap();
+}
+
 
 fn main() {
     let count = 500;
@@ -262,4 +317,5 @@ fn main() {
     gen_rotate_test(count, "../tests/11_ror", -1);
     gen_conv_test(count, "../tests/12_conv_16_16", 16, 16);
     gen_mul_test(count, "../tests/13_mul");
+    gen_div_test(count, "../tests/14_div");
 }
