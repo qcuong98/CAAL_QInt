@@ -63,9 +63,10 @@ QInt operator >> (const QInt &q, unsigned int bits) {
 QInt ShiftRotateLeft(const QInt &q, int bits) {
 	QInt res;
 
-	bits = (bits % N + N) % N;
+	unsigned int total_bits = N << 5;
 
-	bits = N  << 5; // N*32
+	bits = (bits % total_bits + total_bits) % total_bits;
+
         unsigned int s = bits >> 5; //bits / 32
         bits = bits & 31;
         unsigned int outbits = 32 - bits;
@@ -74,7 +75,7 @@ QInt ShiftRotateLeft(const QInt &q, int bits) {
 
         for (int i = 0; i < N; i++) {
                 res.data[(i + s) % N] = (q.data[i] << bits) | out;
-                out = q.data[i] >> outbits;
+                out = outbits >= 32 ? 0 : (q.data[i] >> outbits);
         }
 
 	res.data[s] |= out;
