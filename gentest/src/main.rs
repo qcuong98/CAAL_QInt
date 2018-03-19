@@ -151,36 +151,36 @@ fn gen_shift_test(count: usize, path: &str, direction: i32) {
     write(input, output, path).unwrap();
 }
 
-fn add_test(max: i128) -> (String, String) {
-    let lhs = rand::random::<i128>() % max;
-    let rhs = rand::random::<i128>() % max;
+fn add_test() -> (String, String) {
+    let lhs = rand::random::<i128>();
+    let rhs = rand::random::<i128>();
     use std::i128;
     (format!("10 {} + {}", lhs, rhs), lhs.overflowing_add(rhs).0.to_string())
 }
 
-fn gen_add_test(count: usize, path: &str, max: i128) {
+fn gen_add_test(count: usize, path: &str) {
     let mut input = Vec::new();
     let mut output = Vec::new();
     for _ in 0..count {
-        let (i, o) = add_test(max);
+        let (i, o) = add_test();
         input.push(i);
         output.push(o);
     }
     write(input, output, path).unwrap();
 }
 
-fn substract_test(max: i128) -> (String, String) {
-    let lhs = rand::random::<i128>() % max;
-    let rhs = rand::random::<i128>() % max;
+fn substract_test() -> (String, String) {
+    let lhs = rand::random::<i128>();
+    let rhs = rand::random::<i128>();
     use std::i128;
     (format!("10 {} - {}", lhs, rhs), lhs.overflowing_sub(rhs).0.to_string())
 }
 
-fn gen_substract_test(count: usize, path: &str, max: i128) {
+fn gen_substract_test(count: usize, path: &str) {
     let mut input = Vec::new();
     let mut output = Vec::new();
     for _ in 0..count {
-        let (i, o) = substract_test(max);
+        let (i, o) = substract_test();
         input.push(i);
         output.push(o);
     }
@@ -229,7 +229,7 @@ fn gen_rotate_test(count: usize, path: &str, direction: i32) {
 }
 
 fn main() {
-    let count = 50;
+    let count = 500;
     gen_conv_test(count, "../tests/00_conv_10_10");
     gen_and_test(count, "../tests/01_and");
     gen_or_test(count, "../tests/02_or");
@@ -237,8 +237,8 @@ fn main() {
     gen_not_test(count, "../tests/04_not");
     gen_shift_test(count, "../tests/05_shl", 1);
     gen_shift_test(count, "../tests/06_shr", -1);
-    gen_add_test(count, "../tests/07_add", 10000);
-    gen_substract_test(count, "../tests/08_sub", 10000);
+    gen_add_test(count, "../tests/07_add");
+    gen_substract_test(count, "../tests/08_sub");
     gen_neg_test(count, "../tests/09_neg");
     gen_rotate_test(count, "../tests/10_rol", 1);
     gen_rotate_test(count, "../tests/11_ror", -1);
