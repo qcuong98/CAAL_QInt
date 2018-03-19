@@ -279,7 +279,7 @@ fn gen_mul_test(count: usize, path: &str) {
 
 fn div_test() -> (String, String) {
     let lhs = uniform::<i128>();
-    let rhs = uniform::<i128>();
+    let rhs = uniform::<i32>() as i128;
     let rhs = if rhs == 0 {
         uniform::<i128>()
     } else {
@@ -317,5 +317,5 @@ fn main() {
     gen_rotate_test(count, "../tests/11_ror", -1);
     gen_conv_test(count, "../tests/12_conv_16_16", 16, 16);
     gen_mul_test(count, "../tests/13_mul");
-    gen_div_test(count, "../tests/14_div");
+    gen_div_test(50, "../tests/14_div");
 }
