@@ -22,7 +22,7 @@ bool operator < (const QInt &a, const QInt &b) {
 int BitCount(const QInt &a) {
 	int i = N - 1;
 
-	while (i >= 0 && a.data[i] == 0)
+	while (i >= 0 && a.data[i] == 0) i--;
 
 	if (i < 0) return 0;
 
@@ -41,8 +41,9 @@ QInt operator / (QInt a, QInt b) {
 	if (sign2 == 0)
 		return res; //NaN div by zero
 
-	if (sign1) a = -a;
-	if (sign2) b = -b;
+	if (sign1 < 0) a = -a;
+	if (sign2 < 0) b = -b;
+
 	if (a < b) return res;
 
 	int s = sign1 * sign2;
@@ -53,10 +54,12 @@ QInt operator / (QInt a, QInt b) {
 	while (bit >= 0) {
 		bit--;
 		res = res << 1;
-		if (a < b) continue;
 
-		a = a - b;
-		res.data[0] |= 1; //turn to 1
+		if (!(a < b)) {
+			a = a - b;
+			res.data[0] |= 1; //turn to 1
+		}
+		b = b >> 1;
 	}
 	if (s > 0)
 		return res;

@@ -5,3 +5,5 @@ run:
 	(./a.out $(A); rm a.out)
 gen:
 	cd gentest && cargo +nightly run --release
+debug:
+	g++ *.cpp -std=c++11 -g
