@@ -8,22 +8,25 @@
 using namespace std;
 
 static string to_str(const QInt &q, int base) {
-    assert(base == 10);
     char *s = NULL;
     if (base == 10)
         s = QInt2Dec(q);
+    if (base == 16)
+        s = QInt2Hex(q);
+    if (s == NULL) abort();
     string res(s);
     free(s);
     return res;
 }
 
 static QInt from_str(const string &s, int base) {
-    assert(base == 10);
     if (s.empty())
         return QInt();
     if (base == 10)
         return Dec2QInt(s.data());
-    throw 0;
+    if (base == 16)
+        return Hex2QInt(s.data());
+    abort();
 }
 
 struct Input {
@@ -69,8 +72,8 @@ struct Input {
     }
 #define CASE(x) if (op == x)
 
-        CHECK(in_base == 10);
-        CHECK(out_base == 10);
+        CHECK(in_base == 10 || in_base == 16);
+        CHECK(out_base == 10 || in_base == 16);
 
         QInt L = from_str(lhs, in_base);
 
@@ -114,13 +117,7 @@ struct Input {
     }
 };
 
-ostream & operator << (ostream & os, const QInt &q) {
-	for (int i = N-1; i>=0; i--)
-		os << hex << q.data[i];
-}
-
 int main(int argc, char **argv) {
-
     if (argc < 2)
         abort();
 
