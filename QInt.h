@@ -31,4 +31,7 @@ QInt operator * (const QInt &, const QInt &);
 QInt Dec2QInt(const char *dec);
 char *QInt2Dec(const QInt &q);
 
+QInt Hex2QInt(const char *hex);
+char *QInt2Hex(const QInt &q);
+
 #endif
