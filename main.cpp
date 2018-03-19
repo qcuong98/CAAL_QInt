@@ -106,6 +106,7 @@ struct Input {
         CASE("&") RETURN(L & R);
         CASE("|") RETURN(L | R);
         CASE("^") RETURN(L ^ R);
+	CASE("*") RETURN(L * R);
 
         CHECK(false);
 #undef RETURN
