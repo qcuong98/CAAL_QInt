@@ -14,7 +14,7 @@ char *QInt2Hex(const QInt &input) {
     const char *D    = "0123456789ABCDEF";
     int len          = 32;
     bool is_negative = input.data[N - 1] >> 31;
-    QInt q           = is_negative ? input : -input;
+    QInt q           = is_negative ? -input : input;
     char *s          = (char *)calloc(len + 2, 1);
     for (int i = 0; i < len; i++) {
         s[i] = D[(q.data[i >> 3] >> ((i & 7) << 2)) & 15];
@@ -39,9 +39,6 @@ static int digit_to_val(char c) {
         return 10 + c - 'a';
     throw 0;
 }
-
-#include <iostream>
-using namespace std;
 
 QInt Hex2QInt(const char *s) {
 #define IS_VALID_DIGIT(C) \

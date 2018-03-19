@@ -73,7 +73,7 @@ struct Input {
 #define CASE(x) if (op == x)
 
         CHECK(in_base == 10 || in_base == 16);
-        CHECK(out_base == 10 || in_base == 16);
+        CHECK(out_base == 10 || out_base == 16);
 
         QInt L = from_str(lhs, in_base);
 

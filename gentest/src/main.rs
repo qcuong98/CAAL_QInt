@@ -48,11 +48,11 @@ fn conv_test(in_base: u32, out_base: u32) -> (String, String) {
     )
 }
 
-fn gen_conv_test(count: usize, path: &str) {
+fn gen_conv_test(count: usize, path: &str, in_base: u32, out_base: u32) {
     let mut input = Vec::new();
     let mut output = Vec::new();
     for _ in 0..count {
-        let (i, o) = conv_test(10, 10);
+        let (i, o) = conv_test(in_base, out_base);
         input.push(i);
         output.push(o);
     }
@@ -230,7 +230,7 @@ fn gen_rotate_test(count: usize, path: &str, direction: i32) {
 
 fn main() {
     let count = 500;
-    gen_conv_test(count, "../tests/00_conv_10_10");
+    gen_conv_test(count, "../tests/00_conv_10_10", 10, 10);
     gen_and_test(count, "../tests/01_and");
     gen_or_test(count, "../tests/02_or");
     gen_xor_test(count, "../tests/03_xor");
@@ -242,4 +242,5 @@ fn main() {
     gen_neg_test(count, "../tests/09_neg");
     gen_rotate_test(count, "../tests/10_rol", 1);
     gen_rotate_test(count, "../tests/11_ror", -1);
+    gen_conv_test(count, "../tests/12_conv_16_16", 16, 16);
 }
