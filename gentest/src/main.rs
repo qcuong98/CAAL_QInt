@@ -339,4 +339,5 @@ fn main() {
     gen_conv_test(&mut rng, count, "../tests/12_conv_16_16", 16, 16);
     gen_mul_test(&mut rng, count, "../tests/13_mul");
     gen_div_test(&mut rng, count, "../tests/14_div");
+    gen_conv_test(&mut rng, count, "../tests/15_conv_2_2", 2, 2);
 }

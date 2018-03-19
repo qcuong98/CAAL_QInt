@@ -35,4 +35,7 @@ char *QInt2Dec(const QInt &q);
 QInt Hex2QInt(const char *hex);
 char *QInt2Hex(const QInt &q);
 
+QInt Bin2QInt(const char *bin);
+char *QInt2Bin(const QInt &q);
+
 #endif

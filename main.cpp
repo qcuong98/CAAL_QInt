@@ -13,6 +13,8 @@ static string to_str(const QInt &q, int base) {
         s = QInt2Dec(q);
     if (base == 16)
         s = QInt2Hex(q);
+    if (base == 2)
+        s = QInt2Bin(q);
     if (s == NULL) abort();
     string res(s);
     free(s);
@@ -26,6 +28,8 @@ static QInt from_str(const string &s, int base) {
         return Dec2QInt(s.data());
     if (base == 16)
         return Hex2QInt(s.data());
+    if (base == 2)
+        return Bin2QInt(s.data());
     abort();
 }
 
@@ -72,8 +76,8 @@ struct Input {
     }
 #define CASE(x) if (op == x)
 
-        CHECK(in_base == 10 || in_base == 16);
-        CHECK(out_base == 10 || out_base == 16);
+        CHECK(in_base == 10 || in_base == 16 || in_base == 2);
+        CHECK(out_base == 10 || out_base == 16 || out_base == 2);
 
         QInt L = from_str(lhs, in_base);
 
