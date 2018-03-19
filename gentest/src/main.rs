@@ -282,8 +282,8 @@ fn gen_rotate_test(rng: &mut ThreadRng, count: usize, path: &str, direction: i32
 }
 
 fn mul_test(rng: &mut ThreadRng) -> (String, String) {
-    let lhs = uniform::<i64>(rng) as i128;
-    let rhs = uniform::<i32>(rng) as i128;
+    let lhs = uniform::<i128>(rng) as i128;
+    let rhs = uniform::<i128>(rng) as i128;
     use std::i128;
     (
         format!("10 {} * {}", lhs, rhs),
