@@ -27,6 +27,7 @@ QInt operator - (const QInt &);
 QInt operator + (const QInt &, const QInt &);
 QInt operator - (const QInt &, const QInt &);
 QInt operator * (const QInt &, const QInt &);
+QInt operator / (QInt, QInt);
 
 QInt Dec2QInt(const char *dec);
 char *QInt2Dec(const QInt &q);
