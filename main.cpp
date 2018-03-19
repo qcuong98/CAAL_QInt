@@ -114,7 +114,13 @@ struct Input {
     }
 };
 
+ostream & operator << (ostream & os, const QInt &q) {
+	for (int i = N-1; i>=0; i--)
+		os << hex << q.data[i];
+}
+
 int main(int argc, char **argv) {
+
     if (argc < 2)
         abort();
 
