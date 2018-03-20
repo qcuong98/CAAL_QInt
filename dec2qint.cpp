@@ -1,10 +1,14 @@
 #include <stdlib.h>
 #include "QInt.h"
 
+// Bật bit thứ i lên
 static void setbit(QInt &q, int i) {
     q.data[i >> 5] |= 1 << (i & 31);
 }
 
+// Thực hiện chia xâu x cho 2,
+// gán lại kết quả vào x,
+// trả về độ dài mới của x
 int div2(char *x, int len) {
     char *res = (char *)calloc(len + 1, 1);
     int q     = 0;

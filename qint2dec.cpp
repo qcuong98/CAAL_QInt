@@ -71,6 +71,8 @@ const char *POWER_OF_TWO[128] = {
     "4682502497581563485685164320371950705800", "8275014885173037861371329640643811410710",
 };
 
+// Cộng 2 xâu lại với nhau,
+// gán kết quả vào a
 static void add(char *a, const char *b) {
     int rem = 0;
     for (int i = 0; i < MAX_LEN; i++) {
@@ -85,6 +87,7 @@ static void add(char *a, const char *b) {
     }
 }
 
+// Khởi tạo một xâu toàn số 0
 static char *zero() {
     char *s = (char *)malloc(MAX_LEN + 1);
     memset(s, '0', MAX_LEN);

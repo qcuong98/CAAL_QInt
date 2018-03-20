@@ -1,6 +1,6 @@
 #include "QInt.h"
 
-int Sign(const QInt &a) {
+static int Sign(const QInt &a) {
     if (a.data[N - 1] >> 31)
         return -1;
 
@@ -11,7 +11,7 @@ int Sign(const QInt &a) {
     return i >= 0;
 }
 
-bool operator<(const QInt &a, const QInt &b) {
+static bool operator<(const QInt &a, const QInt &b) {
     int sign = (int)(a.data[N - 1] >> 31) - (b.data[N - 1] >> 31);
     if (sign != 0)
         return sign < 0;
@@ -22,7 +22,7 @@ bool operator<(const QInt &a, const QInt &b) {
     return (i >= 0) && (a.data[i] < b.data[i]);
 }
 
-int BitCount(const QInt &a) {
+static int BitCount(const QInt &a) {
     int i = N - 1;
 
     while (i >= 0 && a.data[i] == 0)

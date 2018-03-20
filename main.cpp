@@ -7,6 +7,7 @@
 #include "QInt.h"
 using namespace std;
 
+// Chuyển từ QInt sang xâu, cơ số `base`
 static string to_str(const QInt &q, int base) {
     char *s = NULL;
     if (base == 10)
@@ -22,6 +23,7 @@ static string to_str(const QInt &q, int base) {
     return res;
 }
 
+// Chuyển từ một xâu có cơ số `base` sang QInt
 static QInt from_str(const string &s, int base) {
     if (s.empty())
         return QInt();
@@ -34,11 +36,13 @@ static QInt from_str(const string &s, int base) {
     abort();
 }
 
+// Cấu trúc để đọc và xử lý một dòng test
 struct Input {
     int in_base;
     int out_base;
     string op;
     string lhs, rhs;
+
     Input(const string &&s) {
         stringstream ss(s);
         string a, b, c, d;

@@ -30,6 +30,7 @@ char *QInt2Hex(const QInt &input) {
     return s;
 }
 
+// Chuyển kí tự c sang giá trị trong hệ hexa
 static int digit_to_val(char c) {
     if ('0' <= c && c <= '9')
         return c - '0';
