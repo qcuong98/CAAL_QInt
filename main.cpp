@@ -128,6 +128,9 @@ struct Input {
     }
 };
 
+// Nhập input từ file argv[1],
+// Xuất output ra file argv[2],
+// Khi không có argv[2] thì xuất ra màn hình
 int main(int argc, char **argv) {
     if (argc < 2)
         abort();
