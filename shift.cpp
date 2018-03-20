@@ -1,88 +1,87 @@
-#include "QInt.h"
 #include <stdio.h>
+#include "QInt.h"
 
 QInt LogicalShiftLeft(const QInt &q, unsigned int bits) {
-	QInt res;
-	unsigned int s = bits >> 5; //bits / 32
-	bits = bits & 31;
-	unsigned int outbit = 32 - bits;
-	
-	uint32_t out = 0;
+    QInt res;
+    unsigned int s      = bits >> 5;  // bits / 32
+    bits                = bits & 31;
+    unsigned int outbit = 32 - bits;
 
-	for (int i = 0; i + s < N; i++) {
-		res.data[i + s] = (q.data[i] << bits) | out;
-		out = (outbit >= 32 ? 0 : (q.data[i] >> outbit));
-	}
+    uint32_t out = 0;
 
-	return res;
+    for (int i = 0; i + s < N; i++) {
+        res.data[i + s] = (q.data[i] << bits) | out;
+        out             = (outbit >= 32 ? 0 : (q.data[i] >> outbit));
+    }
 
+    return res;
 }
 
-QInt operator << (const QInt &q, unsigned int bits) {
-	return LogicalShiftLeft(q, bits);
+QInt operator<<(const QInt &q, unsigned int bits) {
+    return LogicalShiftLeft(q, bits);
 }
 
 QInt LogicalShiftRight(const QInt &q, unsigned int bits) {
-	QInt res;
-	unsigned int s = bits >> 5; //bits / 32
-	bits = bits & 31;
-	uint32_t outmask =  (1u << bits) - 1;
-	unsigned int outbit = 32 - bits;
+    QInt res;
+    unsigned int s      = bits >> 5;  // bits / 32
+    bits                = bits & 31;
+    uint32_t outmask    = (1u << bits) - 1;
+    unsigned int outbit = 32 - bits;
 
-	uint32_t out = 0;
+    uint32_t out = 0;
 
-	for (int i = N - 1; i >= (int)s; i--) {
-		res.data[i - s] = (q.data[i] >> bits) | out;
-		out = (outbit >= 32 ? 0 : ((q.data[i] & outmask) << outbit));
-	}
+    for (int i = N - 1; i >= (int)s; i--) {
+        res.data[i - s] = (q.data[i] >> bits) | out;
+        out             = (outbit >= 32 ? 0 : ((q.data[i] & outmask) << outbit));
+    }
 
-	return res;
+    return res;
 }
 
-QInt operator >> (const QInt &q, unsigned int bits) {
-	int sign = q.data[N - 1] >> 31;
-	QInt res = LogicalShiftRight(q, bits);
+QInt operator>>(const QInt &q, unsigned int bits) {
+    int sign = q.data[N - 1] >> 31;
+    QInt res = LogicalShiftRight(q, bits);
 
-	if (!sign)
-		return res;
+    if (!sign)
+        return res;
 
-	int i;
-	for (i = N - 1; i >= 0 && res.data[i] == 0; i--)
-		res.data[i] = 0xFFFFFFFFu;
-	if (i >= 0) {
-		for (int j = 31; j >= 0; j--) {
-			if ((res.data[i] >> j) & 1)
-				break;
-			res.data[i] |= 1u << j;
-		}
-	}
+    int i;
+    for (i = N - 1; i >= 0 && res.data[i] == 0; i--)
+        res.data[i] = 0xFFFFFFFFu;
+    if (i >= 0) {
+        for (int j = 31; j >= 0; j--) {
+            if ((res.data[i] >> j) & 1)
+                break;
+            res.data[i] |= 1u << j;
+        }
+    }
 
-	return res;	
+    return res;
 }
 
 QInt ShiftRotateLeft(const QInt &q, int bits) {
-	QInt res;
+    QInt res;
 
-	unsigned int total_bits = N << 5;
+    unsigned int total_bits = N << 5;
 
-	bits = (bits % total_bits + total_bits) % total_bits;
+    bits = (bits % total_bits + total_bits) % total_bits;
 
-        unsigned int s = bits >> 5; //bits / 32
-        bits = bits & 31;
-        unsigned int outbits = 32 - bits;
+    unsigned int s       = bits >> 5;  // bits / 32
+    bits                 = bits & 31;
+    unsigned int outbits = 32 - bits;
 
-        uint32_t out = 0;
+    uint32_t out = 0;
 
-        for (int i = 0; i < N; i++) {
-                res.data[(i + s) % N] = (q.data[i] << bits) | out;
-                out = outbits >= 32 ? 0 : (q.data[i] >> outbits);
-        }
+    for (int i = 0; i < N; i++) {
+        res.data[(i + s) % N] = (q.data[i] << bits) | out;
+        out                   = outbits >= 32 ? 0 : (q.data[i] >> outbits);
+    }
 
-	res.data[s] |= out;
+    res.data[s] |= out;
 
-        return res;
+    return res;
 }
 
 QInt ShiftRotateRight(const QInt &q, int bits) {
-        return ShiftRotateLeft(q, -bits);
+    return ShiftRotateLeft(q, -bits);
 }

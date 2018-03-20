@@ -30,8 +30,7 @@ char *QInt2Bin(const QInt &input) {
 }
 
 QInt Bin2QInt(const char *s) {
-#define IS_VALID_DIGIT(C) \
-    ((C) == '0' || (C) == '1')
+#define IS_VALID_DIGIT(C) ((C) == '0' || (C) == '1')
     const int MAX_LEN = 128;
     QInt q;
     int len = strlen(s);
@@ -48,5 +47,5 @@ QInt Bin2QInt(const char *s) {
     for (int i = len - 1 - start, p = start; i >= 0; i--, p++) {
         q.data[i >> 5] |= (s[p] - '0') << (i & 31);
     }
-    return is_negative? -q : q;
+    return is_negative ? -q : q;
 }

@@ -59,5 +59,5 @@ QInt Hex2QInt(const char *s) {
     for (int i = len - 1 - start, p = start; i >= 0; i--, p++) {
         q.data[i >> 3] |= digit_to_val(s[p]) << ((i & 7) << 2);
     }
-    return is_negative? -q : q;
+    return is_negative ? -q : q;
 }

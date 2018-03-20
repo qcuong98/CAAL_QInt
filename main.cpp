@@ -1,9 +1,9 @@
+#include <assert.h>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
-#include <assert.h>
 #include "QInt.h"
 using namespace std;
 
@@ -15,7 +15,8 @@ static string to_str(const QInt &q, int base) {
         s = QInt2Hex(q);
     if (base == 2)
         s = QInt2Bin(q);
-    if (s == NULL) abort();
+    if (s == NULL)
+        abort();
     string res(s);
     free(s);
     return res;
@@ -113,8 +114,8 @@ struct Input {
         CASE("&") RETURN(L & R);
         CASE("|") RETURN(L | R);
         CASE("^") RETURN(L ^ R);
-	CASE("*") RETURN(L * R);
-	CASE("/") RETURN(L / R);
+        CASE("*") RETURN(L * R);
+        CASE("/") RETURN(L / R);
 
         CHECK(false);
 #undef RETURN
