@@ -1,10 +1,6 @@
 #include <stdlib.h>
 #include "QInt.h"
 
-static QInt zero() {
-    return QInt();
-}
-
 static void setbit(QInt &q, int i) {
     q.data[i >> 5] |= 1 << (i & 31);
 }
@@ -30,8 +26,8 @@ int div2(char *x, int len) {
 }
 
 QInt Dec2QInt(const char *dec) {
-    QInt res = zero();
-    int len  = strlen(dec);
+    QInt res;
+    int len = strlen(dec);
 
     if (len == 0)
         return res;

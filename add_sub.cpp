@@ -11,3 +11,7 @@ QInt operator+(const QInt &a, const QInt &b) {
     }
     return c;
 }
+
+QInt operator-(const QInt &a, const QInt &b) {
+    return a + (-b);
+}

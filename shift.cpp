@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "QInt.h"
 
-QInt LogicalShiftLeft(const QInt &q, unsigned int bits) {
+static QInt LogicalShiftLeft(const QInt &q, unsigned int bits) {
     QInt res;
     unsigned int s      = bits >> 5;  // bits / 32
     bits                = bits & 31;
@@ -21,7 +21,7 @@ QInt operator<<(const QInt &q, unsigned int bits) {
     return LogicalShiftLeft(q, bits);
 }
 
-QInt LogicalShiftRight(const QInt &q, unsigned int bits) {
+static QInt LogicalShiftRight(const QInt &q, unsigned int bits) {
     QInt res;
     unsigned int s      = bits >> 5;  // bits / 32
     bits                = bits & 31;
@@ -59,7 +59,7 @@ QInt operator>>(const QInt &q, unsigned int bits) {
     return res;
 }
 
-QInt ShiftRotateLeft(const QInt &q, int bits) {
+QInt RotateLeft(const QInt &q, int bits) {
     QInt res;
 
     unsigned int total_bits = N << 5;
@@ -82,6 +82,6 @@ QInt ShiftRotateLeft(const QInt &q, int bits) {
     return res;
 }
 
-QInt ShiftRotateRight(const QInt &q, int bits) {
-    return ShiftRotateLeft(q, -bits);
+QInt RotateRight(const QInt &q, int bits) {
+    return RotateLeft(q, -bits);
 }

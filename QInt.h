@@ -20,8 +20,8 @@ QInt operator ~ (const QInt &);
 
 QInt operator << (const QInt &, unsigned int);
 QInt operator >> (const QInt &, unsigned int);
-QInt ShiftRotateLeft(const QInt &, int);
-QInt ShiftRotateRight(const QInt &, int);
+QInt RotateLeft(const QInt &, int);
+QInt RotateRight(const QInt &, int);
 
 QInt operator - (const QInt &);
 QInt operator + (const QInt &, const QInt &);

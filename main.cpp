@@ -97,11 +97,11 @@ struct Input {
         }
         CASE("rol") {
             stringstream(rhs) >> i;
-            RETURN(ShiftRotateLeft(L, i));
+            RETURN(RotateLeft(L, i));
         }
         CASE("ror") {
             stringstream(rhs) >> i;
-            RETURN(ShiftRotateRight(L, i));
+            RETURN(RotateRight(L, i));
         }
 
         QInt R = from_str(rhs, in_base);
