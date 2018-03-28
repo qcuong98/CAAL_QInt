@@ -145,7 +145,7 @@ int main(int argc, char **argv) {
         output << input.output() << endl;
 
     if (argc >= 3) {
-        ofstream(argv[3]) << output.str();
+        ofstream(argv[2]) << output.str();
     } else {
         cout << output.str();
     }
